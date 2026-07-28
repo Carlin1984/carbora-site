@@ -19,6 +19,9 @@
   nav.top .links a { color:#D5DEF5; text-decoration:none; font-size:15px; }
   nav.top .links a:hover { color:var(--turq); }
   .cta { background:linear-gradient(90deg, var(--turq), var(--lime)); color:var(--navy); font-weight:800; border-radius:26px; padding:11px 22px; text-decoration:none; font-size:15px; white-space:nowrap; }
+  .cta.alt { background:transparent; color:var(--turq); border:2px solid var(--turq); padding:9px 20px; }
+  .cta.alt:hover { background:var(--turq); color:var(--navy); }
+  .price-cta { text-align:center; margin-top:28px; }
   .langs { display:flex; gap:6px; margin-left:14px; }
   .langs button { background:transparent; border:1px solid rgba(255,255,255,.3); color:#fff; border-radius:14px; padding:3px 10px; cursor:pointer; font-size:12.5px; }
   .langs button.active { background:var(--lime); border-color:var(--lime); color:var(--navy); font-weight:700; }
@@ -84,7 +87,7 @@
     <a href="#quien" data-i18n="nQuien">Para quién</a>
     <a href="#precios" data-i18n="nPrecios">Precios</a>
   </div>
-  <a class="cta" href="#precios" data-i18n="nCta">Muy pronto</a>
+  <a class="cta" href="https://apps.apple.com/app/id6789684921" target="_blank" rel="noopener" data-i18n="nCta">Descargar</a>
   <div class="langs">
     <button data-set="en">EN</button><button data-set="es">ES</button><button data-set="pt">PT</button>
   </div>
@@ -96,8 +99,9 @@
     <p class="sub" data-i18n="sub">Una foto de tu plato y la IA estima los carbohidratos — hecha para la comida real y la vida real con diabetes.</p>
     <div class="hero-ctas">
       <a class="cta" href="#como" data-i18n="heroCta">Ver cómo funciona</a>
+      <a class="cta alt" href="https://apps.apple.com/app/id6789684921" target="_blank" rel="noopener" data-i18n="dl">Descargar en el App Store</a>
     </div>
-    <p class="soon" data-i18n="soon">📱 Muy pronto en el <b>App Store</b></p>
+    <p class="soon" data-i18n="soon">📱 Ya disponible en el App Store · solo iPhone por ahora</p>
   </div>
   <div class="phone"><span class="screen"><img src="app-result-es.jpg" alt="Carbora app"></span></div>
   <div class="cards" id="funciones">
@@ -135,6 +139,9 @@
     <div class="price"><h3 data-i18n="p1t">Mensual</h3><div class="amount">$9.99</div><div class="per" data-i18n="p1per">USD / mes</div><div class="trial" data-i18n="trial">7 días de prueba gratis</div></div>
     <div class="price best"><span class="tag" data-i18n="best">Mejor precio</span><h3 data-i18n="p2t">Anual</h3><div class="amount">$59.99</div><div class="per" data-i18n="p2per">USD / año</div><div class="trial" data-i18n="trial2">7 días de prueba gratis</div></div>
   </div>
+  <div class="price-cta">
+    <a class="cta" href="https://apps.apple.com/app/id6789684921" target="_blank" rel="noopener" data-i18n="dl">Descargar en el App Store</a>
+  </div>
   <p class="disclaimer" data-i18n="disc">Carbora ofrece estimaciones aproximadas y no es consejo médico. Confirma siempre con tu equipo de salud antes de tomar decisiones de tratamiento.</p>
 </section>
 
@@ -147,10 +154,10 @@
 
 <script>
 var I18N = {
-  es:{nFun:'Funciones',nComo:'Cómo funciona',nQuien:'Para quién',nPrecios:'Precios',nCta:'Muy pronto',
+  es:{nFun:'Funciones',nComo:'Cómo funciona',nQuien:'Para quién',nPrecios:'Precios',nCta:'Descargar',dl:'Descargar en el App Store',
     h1a:'Tu comida.',h1b:'Tus carbs.',h1c:'Tu glucosa.',h1d:'Tu control.',
     sub:'Una foto de tu plato y la IA estima los carbohidratos — hecha para la comida real y la vida real con diabetes.',
-    heroCta:'Ver cómo funciona',soon:'📱 Muy pronto en el App Store',
+    heroCta:'Ver cómo funciona',soon:'📱 Ya disponible en el App Store · solo iPhone por ahora',
     f1t:'Escaneo inteligente',f1b:'IA que reconoce tus alimentos al instante y estima carbs, proteína, grasa y calorías.',
     f2t:'Comida real',f2b:'Tortilla de maíz vs. harina, tamales, arepas, feijoada — la comida que otras apps no entienden.',
     f3t:'Glucosa por comida',f3b:'Registra antes y después de comer y mira cómo te afecta cada plato, día a día.',
@@ -167,10 +174,10 @@ var I18N = {
     p1t:'Mensual',p1per:'USD / mes',p2t:'Anual',p2per:'USD / año',trial:'7 días de prueba gratis',trial2:'7 días de prueba gratis',best:'Mejor precio',
     disc:'Carbora ofrece estimaciones aproximadas y no es consejo médico. Confirma siempre con tu equipo de salud antes de tomar decisiones de tratamiento.',
     priv:'Política de privacidad',terms:'Términos de servicio'},
-  en:{nFun:'Features',nComo:'How it works',nQuien:'Who it’s for',nPrecios:'Pricing',nCta:'Coming soon',
+  en:{nFun:'Features',nComo:'How it works',nQuien:'Who it’s for',nPrecios:'Pricing',nCta:'Download',dl:'Download on the App Store',
     h1a:'Your food.',h1b:'Your carbs.',h1c:'Your glucose.',h1d:'Your control.',
     sub:'One photo of your plate and AI estimates the carbs — built for real food and real life with diabetes.',
-    heroCta:'See how it works',soon:'📱 Coming soon to the App Store',
+    heroCta:'See how it works',soon:'📱 Now on the App Store · iPhone only for now',
     f1t:'Smart scanning',f1b:'AI that recognizes your food instantly and estimates carbs, protein, fat and calories.',
     f2t:'Real food',f2b:'Corn vs. flour tortilla, tamales, arepas, rice and beans — food other apps get wrong.',
     f3t:'Glucose per meal',f3b:'Log before and after eating and see how each plate affects you, day by day.',
@@ -187,10 +194,10 @@ var I18N = {
     p1t:'Monthly',p1per:'USD / month',p2t:'Yearly',p2per:'USD / year',trial:'7-day free trial',trial2:'7-day free trial',best:'Best value',
     disc:'Carbora provides approximate estimates and is not medical advice. Always confirm with your care team before making treatment decisions.',
     priv:'Privacy Policy',terms:'Terms of Service'},
-  pt:{nFun:'Funções',nComo:'Como funciona',nQuien:'Para quem',nPrecios:'Preços',nCta:'Em breve',
+  pt:{nFun:'Funções',nComo:'Como funciona',nQuien:'Para quem',nPrecios:'Preços',nCta:'Baixar',dl:'Baixar na App Store',
     h1a:'Sua comida.',h1b:'Seus carbos.',h1c:'Sua glicose.',h1d:'Seu controle.',
     sub:'Uma foto do seu prato e a IA estima os carboidratos — feito para a comida real e a vida real com diabetes.',
-    heroCta:'Veja como funciona',soon:'📱 Em breve na App Store',
+    heroCta:'Veja como funciona',soon:'📱 Já disponível na App Store · só iPhone por enquanto',
     f1t:'Escaneamento inteligente',f1b:'IA que reconhece seus alimentos na hora e estima carboidratos, proteína, gordura e calorias.',
     f2t:'Comida de verdade',f2b:'Arroz com feijão, pão de queijo, farofa, tapioca — a comida que outros apps não entendem.',
     f3t:'Glicose por refeição',f3b:'Registre antes e depois de comer e veja como cada prato afeta você, dia a dia.',
