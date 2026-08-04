@@ -4,145 +4,425 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Carbora — Carb Counter AI</title>
-<meta name="description" content="Tu comida. Tus carbs. Tu glucosa. Tu control. El contador de carbohidratos con IA hecho para la vida real con diabetes.">
+<meta name="description" content="Una foto de tu plato y la IA estima los carbohidratos. Hecha para la comida real y la vida real con diabetes.">
 <link rel="icon" href="icon.png">
 <style>
-  :root { --navy:#02113F; --navy2:#0A1D52; --card:#0E2158; --teal:#0AA79E; --turq:#03DED3; --lime:#AFE52E; --mut:#9FB0D8; }
-  * { box-sizing:border-box; margin:0; padding:0; }
-  html { scroll-behavior:smooth; }
-  body { font-family:-apple-system,'Segoe UI',Roboto,sans-serif; background:var(--navy); color:#fff; line-height:1.6; overflow-x:hidden; }
-  .dots { position:fixed; inset:0; pointer-events:none; background-image:radial-gradient(rgba(3,222,211,.14) 1px, transparent 1.6px); background-size:26px 26px; mask-image:linear-gradient(to bottom, transparent 0%, #000 55%, #000 80%, transparent 100%); }
-  nav.top { display:flex; align-items:center; gap:10px; max-width:1180px; margin:0 auto; padding:20px 24px; position:relative; z-index:2; flex-wrap:wrap; }
-  nav.top img { width:38px; height:38px; border-radius:9px; }
-  nav.top .brand { font-size:21px; font-weight:800; letter-spacing:-.3px; }
-  nav.top .links { display:flex; gap:26px; margin:0 auto; }
-  nav.top .links a { color:#D5DEF5; text-decoration:none; font-size:15px; }
-  nav.top .links a:hover { color:var(--turq); }
-  .cta { background:linear-gradient(90deg, var(--turq), var(--lime)); color:var(--navy); font-weight:800; border-radius:26px; padding:11px 22px; text-decoration:none; font-size:15px; white-space:nowrap; }
-  .cta.alt { background:transparent; color:var(--turq); border:2px solid var(--turq); padding:9px 20px; }
-  .cta.alt:hover { background:var(--turq); color:var(--navy); }
-  .price-cta { text-align:center; margin-top:28px; }
-  .langs { display:flex; gap:6px; margin-left:14px; }
-  .langs button { background:transparent; border:1px solid rgba(255,255,255,.3); color:#fff; border-radius:14px; padding:3px 10px; cursor:pointer; font-size:12.5px; }
-  .langs button.active { background:var(--lime); border-color:var(--lime); color:var(--navy); font-weight:700; }
-  .hero { max-width:1180px; margin:0 auto; padding:48px 24px 72px; display:grid; grid-template-columns:1.05fr .9fr 1fr; gap:36px; align-items:center; position:relative; z-index:1; }
-  h1 { font-size:52px; line-height:1.12; letter-spacing:-1.5px; font-weight:800; }
-  h1 .lime { color:var(--lime); }
-  h1 .turq { color:var(--turq); }
-  .sub { color:var(--mut); margin:20px 0 26px; font-size:17.5px; max-width:400px; }
-  .hero-ctas { display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
-  .soon { color:var(--mut); font-size:13.5px; margin-top:16px; }
-  .soon b { color:#fff; }
-  .phone { width:300px; margin:0 auto; background:#0b0b10; border-radius:46px; padding:12px; box-shadow:0 30px 80px rgba(0,0,0,.55), 0 0 0 2px rgba(255,255,255,.06); }
-  .phone .screen { border-radius:36px; overflow:hidden; display:block; }
-  .phone img { width:100%; display:block; }
-  .cards { display:flex; flex-direction:column; gap:14px; }
-  .fcard { background:linear-gradient(180deg, rgba(14,33,88,.92), rgba(10,29,82,.92)); border:1px solid rgba(3,222,211,.16); border-radius:16px; padding:16px 18px; display:flex; gap:14px; align-items:flex-start; }
-  .fcard .ic { width:42px; height:42px; border-radius:11px; background:rgba(3,222,211,.12); display:flex; align-items:center; justify-content:center; font-size:20px; flex:none; }
-  .fcard h3 { font-size:16px; margin-bottom:2px; }
-  .fcard p { color:var(--mut); font-size:13.8px; line-height:1.45; }
-  section.block { max-width:1180px; margin:0 auto; padding:56px 24px; position:relative; z-index:1; }
-  section.block h2 { font-size:30px; letter-spacing:-.5px; margin-bottom:8px; }
-  section.block .lead { color:var(--mut); margin-bottom:32px; max-width:560px; }
-  .steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:16px; }
-  .step { background:var(--card); border-radius:18px; padding:24px; }
-  .step .n { width:34px; height:34px; border-radius:50%; background:linear-gradient(90deg,var(--turq),var(--lime)); color:var(--navy); font-weight:800; display:flex; align-items:center; justify-content:center; margin-bottom:12px; }
-  .step h3 { font-size:17px; margin-bottom:4px; }
-  .step p { color:var(--mut); font-size:14.5px; }
-  .who { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:16px; }
-  .who .w { background:var(--card); border-radius:18px; padding:24px; border-top:4px solid var(--turq); }
-  .who .w:nth-child(2) { border-top-color:var(--lime); }
-  .who .w:nth-child(3) { border-top-color:#1565C0; }
-  .who h3 { font-size:17px; margin-bottom:6px; }
-  .who p { color:var(--mut); font-size:14.5px; }
-  .pricing { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; max-width:760px; }
-  .price { background:var(--card); border-radius:18px; padding:26px; text-align:center; }
-  .price.best { border:2px solid var(--lime); position:relative; }
-  .price .tag { position:absolute; top:-13px; left:50%; transform:translateX(-50%); background:var(--lime); color:var(--navy); font-size:12px; font-weight:800; border-radius:12px; padding:2px 12px; }
-  .price h3 { font-size:16px; color:var(--mut); font-weight:600; }
-  .price .amount { font-size:34px; font-weight:800; margin:6px 0; }
-  .price .per { color:var(--mut); font-size:14px; }
-  .price .trial { color:var(--turq); font-size:13.5px; margin-top:10px; }
-  .disclaimer { color:#7488B8; font-size:13px; max-width:640px; margin-top:36px; }
-  footer { border-top:1px solid rgba(255,255,255,.08); text-align:center; padding:34px 24px 44px; color:#7488B8; font-size:14px; position:relative; z-index:1; }
-  footer a { color:var(--turq); text-decoration:none; margin:0 8px; }
-  @media (max-width:980px){
-    .hero { grid-template-columns:1fr; text-align:center; }
-    h1 { font-size:40px; }
-    .sub { margin-left:auto; margin-right:auto; }
-    .hero-ctas { justify-content:center; }
-    nav.top .links { display:none; }
-    .cards { max-width:460px; margin:0 auto; }
+  :root{
+    --navy:#02113F; --deep:#010B28; --turq:#03DED3; --lime:#AFE52E; --teal:#0AA79E;
+    --ink:#0B1E3A; --mut:#5B6770; --line:#E4EAF2; --soft:#F6F9FC; --dim:#9FB0D8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,'Segoe UI',Roboto,sans-serif;background:#fff;color:var(--ink);line-height:1.6;overflow-x:hidden}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 26px}
+  .grad{background:linear-gradient(90deg,var(--turq),var(--lime));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  /* ================= HERO ================= */
+  .hero{position:relative;overflow:hidden;background:linear-gradient(150deg,#02113F 0%,#04154A 40%,#02113F 100%);color:#fff}
+  .plate-bleed{position:absolute;right:-90px;top:50%;transform:translateY(-50%);width:800px;height:800px;
+    -webkit-mask-image:radial-gradient(circle at 50% 50%,#000 43%,rgba(0,0,0,.6) 49%,rgba(0,0,0,0) 63%);
+    mask-image:radial-gradient(circle at 50% 50%,#000 43%,rgba(0,0,0,.6) 49%,rgba(0,0,0,0) 63%)}
+  .plate-bleed img{width:100%;height:100%;object-fit:cover;object-position:50% 48%}
+  .plate-fade{position:absolute;inset:0;
+    background:
+      linear-gradient(90deg,#02113F 0%,#02113F 20%,rgba(2,17,63,.82) 30%,rgba(2,17,63,.24) 44%,rgba(2,17,63,0) 60%),
+      linear-gradient(180deg,rgba(2,17,63,.55) 0%,rgba(2,17,63,0) 15%,rgba(2,17,63,0) 84%,rgba(2,17,63,.9) 100%)}
+  .plate-tint{position:absolute;inset:0;background:radial-gradient(620px 460px at 62% 50%,rgba(10,167,158,.20),transparent 68%)}
+  .dots{position:absolute;inset:0;pointer-events:none;
+    background-image:radial-gradient(rgba(3,222,211,.13) 1px,transparent 1.6px);background-size:26px 26px;
+    -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.6) 0,transparent 60%);
+    mask-image:linear-gradient(to bottom,rgba(0,0,0,.6) 0,transparent 60%)}
+
+  nav.top{position:relative;z-index:6;display:flex;align-items:center;gap:12px;max-width:1160px;margin:0 auto;padding:20px 26px;flex-wrap:wrap}
+  nav.top img.logo{width:36px;height:36px;border-radius:10px}
+  nav.top .brand{font-size:20px;font-weight:800;letter-spacing:1.4px}
+  nav.top .links{display:flex;gap:30px;margin:0 auto}
+  nav.top .links a{color:#DCE5F8;text-decoration:none;font-size:15px}
+  nav.top .links a:hover{color:var(--turq)}
+  .pill{background:linear-gradient(90deg,var(--lime),#7BD84F);color:#0B2C10;font-weight:800;border-radius:26px;
+    padding:11px 22px;text-decoration:none;font-size:14.5px;white-space:nowrap;display:inline-block;box-shadow:0 8px 22px rgba(175,229,46,.25)}
+  .langs{display:flex;gap:6px;margin-left:10px}
+  .langs button{background:transparent;border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:14px;padding:3px 10px;cursor:pointer;font-size:12.5px}
+  .langs button.active{background:var(--lime);border-color:var(--lime);color:var(--navy);font-weight:700}
+
+  .hero-grid{position:relative;z-index:4;display:grid;grid-template-columns:1fr 1.02fr;gap:20px;align-items:center;padding:34px 0 70px}
+  .badge{display:inline-flex;align-items:center;gap:9px;border:1px solid rgba(255,255,255,.20);background:rgba(255,255,255,.07);
+    color:#E4EEFF;border-radius:999px;padding:7px 15px;font-size:11.5px;font-weight:800;letter-spacing:.8px;text-transform:uppercase}
+  .badge .bdot{width:16px;height:16px;border-radius:50%;background:linear-gradient(135deg,var(--turq),var(--lime));flex:none}
+  h1{font-size:63px;line-height:1.03;letter-spacing:-2.2px;font-weight:800;margin:22px 0 0;max-width:470px}
+  .sub{color:#C3D0EC;margin:22px 0 30px;font-size:17.5px;max-width:410px}
+  .ctas{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .store{display:inline-flex;align-items:center;gap:12px;background:#000;border:1px solid rgba(255,255,255,.22);
+    border-radius:15px;padding:11px 22px;text-decoration:none;color:#fff}
+  .store svg{width:27px;height:27px;flex:none}
+  .store .s1{display:block;font-size:11px;color:#C9D5F0;line-height:1.1}
+  .store .s2{display:block;font-size:19px;font-weight:700;line-height:1.2;letter-spacing:-.3px}
+  .ghost{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.28);border-radius:15px;
+    padding:14px 22px;text-decoration:none;color:#fff;font-size:15px;font-weight:600;background:rgba(255,255,255,.05)}
+  .ghost .play{width:24px;height:24px;border-radius:50%;border:1.4px solid rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;font-size:9px}
+  .trialline{margin-top:20px;color:#A9BADF;font-size:13.5px;display:flex;align-items:center;gap:8px}
+  .trialline svg{width:15px;height:15px;flex:none;color:var(--lime)}
+
+  .art{position:relative;height:600px}
+  .ring{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);width:430px;height:430px;border-radius:50%;
+    background:radial-gradient(circle,rgba(3,222,211,.30),transparent 62%);filter:blur(12px)}
+  .phone{position:absolute;left:46%;transform:translateX(-50%);top:14px;width:272px;background:#05060B;border-radius:44px;padding:9px;
+    box-shadow:0 46px 100px rgba(0,0,0,.7),0 0 0 1.6px rgba(255,255,255,.13),0 0 70px rgba(3,222,211,.22);z-index:3}
+  .phone img{width:100%;display:block;border-radius:36px}
+  .chip{position:absolute;background:#fff;color:var(--ink);border-radius:17px;padding:12px 15px 10px;
+    box-shadow:0 20px 45px rgba(0,0,0,.38);z-index:4;width:150px}
+  .chip .lbl{display:flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;color:var(--mut)}
+  .chip .dot{width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}
+  .chip .dot svg{width:10px;height:10px;color:#fff}
+  .chip .val{font-size:25px;font-weight:800;letter-spacing:-.6px;margin-top:3px;white-space:nowrap}
+  .chip .val small{font-size:12.5px;font-weight:700;color:var(--mut)}
+  .chip .foot{font-size:10.5px;color:#8A95A3}
+  .spark{display:block;width:100%;height:26px;margin-top:5px}
+  .c-gluc{left:-40px;top:96px}
+  .c-carbs{left:-58px;top:290px}
+  .c-prot{right:-46px;top:60px}
+  .c-cal{right:-30px;top:300px}
+
+  /* ================= LIGHT SECTIONS ================= */
+  section{position:relative;padding:76px 0}
+  .alt{background:var(--soft)}
+  h2{font-size:33px;letter-spacing:-.9px;text-align:center}
+  .lead{color:var(--mut);text-align:center;margin:10px auto 44px;max-width:560px;font-size:16px}
+
+  .feats{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+  .feat{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px 22px;box-shadow:0 10px 26px rgba(11,30,58,.06)}
+  .feat .ic{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+  .feat .ic svg{width:24px;height:24px;color:#fff}
+  .feat h3{font-size:16.5px;line-height:1.25;margin-bottom:7px}
+  .feat p{font-size:13.8px;color:var(--mut);line-height:1.5}
+
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+  .step{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;display:flex;gap:16px;box-shadow:0 10px 26px rgba(11,30,58,.06)}
+  .step .n{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--lime));color:#fff;
+    font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;flex:none}
+  .step h3{font-size:16.5px;margin-bottom:5px}
+  .step p{font-size:13.6px;color:var(--mut);line-height:1.5}
+  .step .visual{margin-top:14px}
+  .step .visual img{width:100%;border-radius:12px;display:block}
+  .mini{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff}
+  .mini .row{display:flex;align-items:center;gap:8px;font-size:12.5px;padding:4px 0;font-weight:600}
+  .mini .row .nm{flex:1;color:var(--mut)}
+  .mini .row .vl{font-weight:800}
+  .mini .d{width:9px;height:9px;border-radius:50%;flex:none}
+  .gcard{border:1px solid var(--line);border-radius:12px;padding:11px 13px;background:#fff}
+  .gcard .t{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--mut);font-weight:700}
+  .gcard .v{font-size:22px;font-weight:800;margin-top:2px}
+  .gcard .v small{font-size:12px;color:var(--mut);font-weight:700}
+
+  .vs{display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:center;position:relative}
+  .vscol{border-radius:22px;padding:30px 28px}
+  .mine{background:linear-gradient(150deg,#02113F,#0A3F6B);color:#fff;box-shadow:0 20px 50px rgba(2,17,63,.28)}
+  .theirs{background:#fff;border:1px solid var(--line);box-shadow:0 10px 26px rgba(11,30,58,.06)}
+  .vscol h3{font-size:18px;margin-bottom:18px;display:flex;align-items:center;gap:10px;letter-spacing:.4px}
+  .vscol h3 img{width:26px;height:26px;border-radius:7px}
+  .vscol li{list-style:none;display:flex;gap:11px;align-items:flex-start;font-size:14.2px;margin:12px 0;line-height:1.45}
+  .theirs li{color:var(--mut)}
+  .mk{width:20px;height:20px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;margin-top:1px}
+  .ok{background:#DFF5C9;color:#3E7A0A}
+  .no{background:#FBE3E1;color:#B3261E}
+  .vsball{width:66px;height:66px;border-radius:50%;background:#fff;border:1px solid var(--line);box-shadow:0 12px 30px rgba(11,30,58,.14);
+    display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--mut);font-size:16px;margin:0 -22px;z-index:3;position:relative}
+
+  .who{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .w{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px;border-top:4px solid var(--teal);box-shadow:0 10px 26px rgba(11,30,58,.06)}
+  .w:nth-child(2){border-top-color:var(--lime)}
+  .w:nth-child(3){border-top-color:#5AA9F7}
+  .w h3{font-size:17px;margin-bottom:7px}
+  .w p{color:var(--mut);font-size:14.2px}
+
+  .pricing{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;max-width:640px;margin:0 auto}
+  .price{background:#fff;border:1px solid var(--line);border-radius:20px;padding:28px;text-align:center;position:relative;box-shadow:0 10px 26px rgba(11,30,58,.06)}
+  .price.best{border:2px solid var(--lime)}
+  .price .tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--lime);color:#0B2C10;
+    font-size:12px;font-weight:800;border-radius:12px;padding:3px 14px;white-space:nowrap}
+  .price h3{font-size:15px;color:var(--mut);font-weight:600}
+  .price .amount{font-size:38px;font-weight:800;margin:6px 0;letter-spacing:-1.2px}
+  .price .per{color:var(--mut);font-size:14px}
+  .price .trial{color:var(--teal);font-size:13.5px;margin-top:12px;font-weight:600}
+
+  .final{background:linear-gradient(110deg,#02113F 0%,#083A63 52%,#1F7F55 82%,#5FA82F 100%);border-radius:26px;color:#fff;
+    padding:46px;display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap}
+  .final h2{font-size:33px;text-align:left;line-height:1.15}
+  .final p{color:#CBDCF5;font-size:14.5px;margin-top:12px;max-width:370px}
+  .final .trialline{color:#D8E6C4;margin-top:14px}
+  .disclaimer{color:#8895A8;font-size:12.8px;max-width:720px;margin:34px auto 0;text-align:center}
+  footer{border-top:1px solid var(--line);text-align:center;padding:32px 26px 44px;color:#8895A8;font-size:14px}
+  footer a{color:var(--teal);text-decoration:none;margin:0 8px}
+
+  @media (max-width:1000px){
+    .hero-grid{grid-template-columns:1fr;text-align:center}
+    h1{font-size:44px;margin-left:auto;margin-right:auto}
+    .sub{margin-left:auto;margin-right:auto}
+    .ctas,.trialline{justify-content:center}
+    .plate-bleed{width:100%;opacity:.5}
+    .art{height:540px;margin-top:16px}
+    .phone{width:236px}
+    .c-gluc{left:0;top:80px}.c-carbs{left:-10px;top:300px}.c-prot{right:-6px;top:50px}.c-cal{right:0;top:310px}
+    nav.top .links{display:none}
+    .feats{grid-template-columns:repeat(2,1fr)}
+    .steps,.who{grid-template-columns:1fr}
+    .vs{grid-template-columns:1fr;gap:16px}
+    .vsball{margin:-14px auto;}
+    .final{justify-content:center;text-align:center}
+    .final h2{text-align:center}
+  }
+  @media (max-width:600px){
+    h1{font-size:35px}
+    .feats,.pricing{grid-template-columns:1fr}
+    .chip{width:126px;padding:10px 12px}
+    .chip .val{font-size:20px}
+    .art{height:480px}
+    .phone{width:196px}
   }
 </style>
 </head>
 <body>
-<div class="dots"></div>
-<nav class="top">
-  <img src="icon.png" alt="Carbora">
-  <span class="brand">Carbora</span>
-  <div class="links">
-    <a href="#funciones" data-i18n="nFun">Funciones</a>
-    <a href="#como" data-i18n="nComo">Cómo funciona</a>
-    <a href="#quien" data-i18n="nQuien">Para quién</a>
-    <a href="#precios" data-i18n="nPrecios">Precios</a>
-  </div>
-  <a class="cta" href="https://apps.apple.com/app/id6789684921" target="_blank" rel="noopener" data-i18n="nCta">Descargar</a>
-  <div class="langs">
-    <button data-set="en">EN</button><button data-set="es">ES</button><button data-set="pt">PT</button>
-  </div>
-</nav>
 
+<!-- ================= HERO ================= -->
 <div class="hero">
-  <div>
-    <h1><span data-i18n="h1a">Tu comida.</span><br><span class="lime" data-i18n="h1b">Tus carbs.</span><br><span class="turq" data-i18n="h1c">Tu glucosa.</span><br><span data-i18n="h1d">Tu control.</span></h1>
-    <p class="sub" data-i18n="sub">Una foto de tu plato y la IA estima los carbohidratos — hecha para la comida real y la vida real con diabetes.</p>
-    <div class="hero-ctas">
-      <a class="cta" href="#como" data-i18n="heroCta">Ver cómo funciona</a>
-      <a class="cta alt" href="https://apps.apple.com/app/id6789684921" target="_blank" rel="noopener" data-i18n="dl">Descargar en el App Store</a>
+  <div class="plate-bleed"><img src="hero-plate.png" alt=""></div>
+  <div class="plate-fade"></div>
+  <div class="plate-tint"></div>
+  <div class="dots"></div>
+
+  <nav class="top">
+    <img class="logo" src="icon.png" alt="Carbora">
+    <span class="brand">CARBORA</span>
+    <div class="links">
+      <a href="#como" data-i18n="nComo">Cómo funciona</a>
+      <a href="#funciones" data-i18n="nFun">Funciones</a>
+      <a href="#quien" data-i18n="nQuien">Para quién</a>
+      <a href="#precios" data-i18n="nPrecios">Precios</a>
     </div>
-    <p class="soon" data-i18n="soon">📱 Ya disponible en el App Store · solo iPhone por ahora</p>
-  </div>
-  <div class="phone"><span class="screen"><img src="app-result-es.jpg" alt="Carbora app"></span></div>
-  <div class="cards" id="funciones">
-    <div class="fcard"><div class="ic">📸</div><div><h3 data-i18n="f1t">Escaneo inteligente</h3><p data-i18n="f1b">IA que reconoce tus alimentos al instante y estima carbs, proteína, grasa y calorías.</p></div></div>
-    <div class="fcard"><div class="ic">🌮</div><div><h3 data-i18n="f2t">Comida real</h3><p data-i18n="f2b">Tortilla de maíz vs. harina, tamales, arepas, feijoada — la comida que otras apps no entienden.</p></div></div>
-    <div class="fcard"><div class="ic">💧</div><div><h3 data-i18n="f3t">Glucosa por comida</h3><p data-i18n="f3b">Registra antes y después de comer y mira cómo te afecta cada plato, día a día.</p></div></div>
-    <div class="fcard"><div class="ic">🔒</div><div><h3 data-i18n="f4t">Privado por diseño</h3><p data-i18n="f4b">Tus fotos se analizan y se descartan al instante. Tus datos jamás se venden ni comparten.</p></div></div>
+    <a class="pill" href="https://apps.apple.com/app/id6789684921" target="_blank" rel="noopener" data-i18n="nCta">Prueba gratis 7 días</a>
+    <div class="langs"><button data-set="en">EN</button><button data-set="es">ES</button><button data-set="pt">PT</button></div>
+  </nav>
+
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="badge"><span class="bdot"></span><span data-i18n="badge">La app de carbs hecha para la comida latina</span></span>
+        <h1><span data-i18n="h1a">Cuenta tus carbohidratos</span> <span class="grad" data-i18n="h1b">con una foto</span></h1>
+        <p class="sub" data-i18n="sub">Carbora usa IA para estimar los carbohidratos de tu plato a partir de una foto, y los guarda junto a tus lecturas de glucosa.</p>
+        <div class="ctas">
+          <a class="store" href="https://apps.apple.com/app/id6789684921" target="_blank" rel="noopener">
+            <svg viewBox="0 0 384 512" fill="#fff" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+            <span><span class="s1" data-i18n="dlSmall">Descárgala en el</span><span class="s2">App Store</span></span>
+          </a>
+          <a class="ghost" href="#como"><span class="play">▶</span><span data-i18n="heroCta">Ver cómo funciona</span></a>
+        </div>
+        <p class="trialline">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="10" rx="2.4"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/></svg>
+          <span data-i18n="trialLine">Prueba gratis 7 días. Cancela cuando quieras.</span>
+        </p>
+      </div>
+
+      <div class="art">
+        <div class="ring"></div>
+        <div class="phone"><img src="app-hoy.png" alt="Carbora"></div>
+
+        <div class="chip c-gluc">
+          <div class="lbl">
+            <span class="dot" style="background:#1565C0"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2s7 7.6 7 12a7 7 0 0 1-14 0c0-4.4 7-12 7-12z"/></svg></span>
+            <span data-i18n="chipGluc">Glucosa</span>
+          </div>
+          <div class="val">112 <small>mg/dL</small></div>
+          <div class="foot" data-i18n="youLogged">Tu lectura</div>
+          <svg class="spark" viewBox="0 0 120 26" preserveAspectRatio="none"><polyline points="0,20 15,17 30,19 45,12 60,15 75,8 90,11 105,6 120,9" fill="none" stroke="#1565C0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+
+        <div class="chip c-carbs">
+          <div class="lbl">
+            <span class="dot" style="background:#2E9E5B"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4c0 9-5 14-11 14H5c0-9 5-14 11-14z"/></svg></span>
+            <span data-i18n="chipCarbs">Carbohidratos</span>
+          </div>
+          <div class="val">≈45 <small>g</small></div>
+          <div class="foot" data-i18n="estim">Estimación</div>
+          <svg class="spark" viewBox="0 0 120 26" preserveAspectRatio="none"><polyline points="0,22 15,18 30,20 45,13 60,16 75,10 90,12 105,5 120,8" fill="none" stroke="#2E9E5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+
+        <div class="chip c-prot">
+          <div class="lbl">
+            <span class="dot" style="background:#E8722C"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9h2v6H4zM7 7h2v10H7zM15 7h2v10h-2zM18 9h2v6h-2zM10 11h4v2h-4z"/></svg></span>
+            <span data-i18n="chipProt">Proteína</span>
+          </div>
+          <div class="val">≈32 <small>g</small></div>
+          <div class="foot" data-i18n="estim">Estimación</div>
+          <svg class="spark" viewBox="0 0 120 26" preserveAspectRatio="none"><polyline points="0,16 15,19 30,13 45,15 60,9 75,12 90,7 105,10 120,6" fill="none" stroke="#E8722C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+
+        <div class="chip c-cal">
+          <div class="lbl">
+            <span class="dot" style="background:#7A4FD3"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2c1 4-2 5-2 8a3 3 0 0 0 6 0c2 2 3 4.4 3 7a8 8 0 1 1-16 0C4 10 10 8 13 2z"/></svg></span>
+            <span data-i18n="chipCal">Calorías</span>
+          </div>
+          <div class="val">≈480 <small>kcal</small></div>
+          <div class="foot" data-i18n="estim">Estimación</div>
+          <svg class="spark" viewBox="0 0 120 26" preserveAspectRatio="none"><polyline points="0,18 15,14 30,17 45,10 60,13 75,7 90,10 105,4 120,7" fill="none" stroke="#7A4FD3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<section class="block" id="como">
-  <h2 data-i18n="comoT">Cómo funciona</h2>
-  <p class="lead" data-i18n="comoL">Tres pasos, menos de un minuto por comida.</p>
-  <div class="steps">
-    <div class="step"><div class="n">1</div><h3 data-i18n="s1t">Fotografía tu plato</h3><p data-i18n="s1b">La IA identifica cada alimento y estima sus carbohidratos en segundos.</p></div>
-    <div class="step"><div class="n">2</div><h3 data-i18n="s2t">Ajusta si hace falta</h3><p data-i18n="s2b">Las porciones siempre son editables. Tú tienes la última palabra.</p></div>
-    <div class="step"><div class="n">3</div><h3 data-i18n="s3t">Descubre tus patrones</h3><p data-i18n="s3b">Registra tu glucosa por comida y ve tu historial por día, semana y mes.</p></div>
+<!-- ================= FEATURES ================= -->
+<section id="funciones">
+  <div class="wrap">
+    <div class="feats">
+      <div class="feat">
+        <div class="ic" style="background:linear-gradient(135deg,#0AA79E,#03DED3)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5A2.5 2.5 0 0 1 5.5 6h1.7l1.2-2h6.2l1.2 2h1.7A2.5 2.5 0 0 1 21 8.5v8A2.5 2.5 0 0 1 18.5 19h-13A2.5 2.5 0 0 1 3 16.5z"/><circle cx="12" cy="12.5" r="3.4"/></svg></div>
+        <h3 data-i18n="f1t">IA que estima tus carbs</h3>
+        <p data-i18n="f1b">Reconoce los alimentos de tu plato y estima carbohidratos, proteína, grasa y calorías.</p>
+      </div>
+      <div class="feat">
+        <div class="ic" style="background:linear-gradient(135deg,#1E8E4B,#8FD94F)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3.2 11h17.6a8.8 8.8 0 0 1-17.6 0z"/><path d="M2 20h20"/><path d="M12 11c0-3 2-4.6 2-6.2A2 2 0 0 0 12 3"/></svg></div>
+        <h3 data-i18n="f2t">Comida real, comida latina</h3>
+        <p data-i18n="f2b">Tortilla de maíz o de harina, tamales, arepas, feijoada — la comida que otras apps no entienden.</p>
+      </div>
+      <div class="feat">
+        <div class="ic" style="background:linear-gradient(135deg,#1565C0,#5AA9F7)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2s5.8 6 5.8 9.8a5.8 5.8 0 0 1-11.6 0C6.2 9.2 12 3.2 12 3.2z"/></svg></div>
+        <h3 data-i18n="f3t">Tu glucosa, comida por comida</h3>
+        <p data-i18n="f3b">Registra tu lectura antes y después. La app te muestra tus números, nunca opiniones sobre ellos.</p>
+      </div>
+      <div class="feat">
+        <div class="ic" style="background:linear-gradient(135deg,#7A4FD3,#B08BEE)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4l10-10a2.8 2.8 0 0 0-4-4L4 16z"/><path d="M13.5 6.5 17.5 10.5"/></svg></div>
+        <h3 data-i18n="f4t">Siempre editable</h3>
+        <p data-i18n="f4b">Corrige el nombre, ajusta la porción o agrega lo que falte. Tú tienes la última palabra.</p>
+      </div>
+      <div class="feat">
+        <div class="ic" style="background:linear-gradient(135deg,#E8722C,#F7A55A)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="10" rx="2.4"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/></svg></div>
+        <h3 data-i18n="f5t">Tus fotos no se guardan</h3>
+        <p data-i18n="f5b">La foto se analiza y se descarta al instante. Tus datos jamás se venden ni se comparten.</p>
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="block" id="quien">
-  <h2 data-i18n="quienT">Para quién es Carbora</h2>
-  <p class="lead" data-i18n="quienL">Para cualquiera que necesite saber cuántos carbohidratos hay en su plato.</p>
-  <div class="who">
-    <div class="w"><h3 data-i18n="w1t">Personas con diabetes</h3><p data-i18n="w1b">Contar carbs 3 veces al día agota. Carbora lo convierte en una foto y conecta cada comida con tu glucosa.</p></div>
-    <div class="w"><h3 data-i18n="w2t">Deportistas</h3><p data-i18n="w2b">Controla tus carbohidratos para entrenar y competir sin hojas de cálculo ni básculas.</p></div>
-    <div class="w"><h3 data-i18n="w3t">Cualquier persona</h3><p data-i18n="w3b">Si cuidas tu consumo de carbohidratos, una foto basta para saber dónde estás parado.</p></div>
+<!-- ================= HOW ================= -->
+<section class="alt" id="como">
+  <div class="wrap">
+    <h2 data-i18n="comoT">Cómo funciona</h2>
+    <p class="lead" data-i18n="comoL">Tres pasos, menos de un minuto por comida.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="n">1</div>
+        <div>
+          <h3 data-i18n="s1t">Toma una foto</h3>
+          <p data-i18n="s1b">Captura tu plato en segundos. La IA identifica los alimentos al instante.</p>
+          <div class="visual"><img src="hero-plate.png" alt="" style="height:118px;object-fit:cover"></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="n">2</div>
+        <div>
+          <h3 data-i18n="s2t">Revisa y ajusta</h3>
+          <p data-i18n="s2b">Carbohidratos, proteína, grasa y calorías estimados. Edítalos si hace falta.</p>
+          <div class="visual mini">
+            <div class="row"><span class="d" style="background:#2E9E5B"></span><span class="nm" data-i18n="chipCarbs">Carbohidratos</span><span class="vl">≈45 g</span></div>
+            <div class="row"><span class="d" style="background:#E8722C"></span><span class="nm" data-i18n="chipProt">Proteína</span><span class="vl">≈32 g</span></div>
+            <div class="row"><span class="d" style="background:#1565C0"></span><span class="nm" data-i18n="chipFat">Grasa</span><span class="vl">≈14 g</span></div>
+            <div class="row"><span class="d" style="background:#7A4FD3"></span><span class="nm" data-i18n="chipCal">Calorías</span><span class="vl">≈480 kcal</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="n">3</div>
+        <div>
+          <h3 data-i18n="s3t">Registra tu glucosa</h3>
+          <p data-i18n="s3b">Guarda tus lecturas junto a la comida y revisa tu historial por semana y por mes.</p>
+          <div class="visual gcard">
+            <div class="t"><span class="d" style="width:9px;height:9px;border-radius:50%;background:#1565C0;display:inline-block"></span><span data-i18n="chipGluc">Glucosa</span></div>
+            <div class="v">112 <small>mg/dL</small></div>
+            <svg class="spark" viewBox="0 0 120 26" preserveAspectRatio="none" style="height:34px"><polyline points="0,20 15,17 30,19 45,12 60,15 75,8 90,11 105,6 120,9" fill="none" stroke="#1565C0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="block" id="precios">
-  <h2 data-i18n="pT">Precios simples</h2>
-  <p class="lead" data-i18n="pL">Tus primeros análisis de foto son gratis. Tu historial de comidas y glucosa es gratis para siempre.</p>
-  <div class="pricing">
-    <div class="price"><h3 data-i18n="p1t">Mensual</h3><div class="amount">$9.99</div><div class="per" data-i18n="p1per">USD / mes</div><div class="trial" data-i18n="trial">7 días de prueba gratis</div></div>
-    <div class="price best"><span class="tag" data-i18n="best">Mejor precio</span><h3 data-i18n="p2t">Anual</h3><div class="amount">$59.99</div><div class="per" data-i18n="p2per">USD / año</div><div class="trial" data-i18n="trial2">7 días de prueba gratis</div></div>
+<!-- ================= VS ================= -->
+<section>
+  <div class="wrap">
+    <h2 data-i18n="vsT">¿Por qué elegir Carbora?</h2>
+    <p class="lead" data-i18n="vsL">Lo que cambia cuando la app se diseñó para contar carbohidratos, y no para bajar de peso.</p>
+    <div class="vs">
+      <div class="vscol mine">
+        <h3><img src="icon.png" alt="">CARBORA</h3>
+        <ul>
+          <li><span class="mk ok">✓</span><span data-i18n="v1">Una foto y listo: sin buscar en listas ni pesar la comida</span></li>
+          <li><span class="mk ok">✓</span><span data-i18n="v2">Entiende la comida latina, no solo la comida de catálogo</span></li>
+          <li><span class="mk ok">✓</span><span data-i18n="v3">Guarda tus lecturas de glucosa junto a cada comida</span></li>
+          <li><span class="mk ok">✓</span><span data-i18n="v4">Porciones y nombres editables por ti</span></li>
+          <li><span class="mk ok">✓</span><span data-i18n="v5">Tus fotos no se almacenan</span></li>
+        </ul>
+      </div>
+      <div class="vsball">VS</div>
+      <div class="vscol theirs">
+        <h3 data-i18n="gT">Contar a mano o con apps genéricas</h3>
+        <ul>
+          <li><span class="mk no">✕</span><span data-i18n="g1">Buscar cada ingrediente en una lista, tres veces al día</span></li>
+          <li><span class="mk no">✕</span><span data-i18n="g2">Bases de datos pensadas para otra cocina</span></li>
+          <li><span class="mk no">✕</span><span data-i18n="g3">La glucosa vive en otra libreta</span></li>
+          <li><span class="mk no">✕</span><span data-i18n="g4">Porciones fijas que no se parecen a tu plato</span></li>
+          <li><span class="mk no">✕</span><span data-i18n="g5">Cuentan calorías, no carbohidratos</span></li>
+        </ul>
+      </div>
+    </div>
   </div>
-  <div class="price-cta">
-    <a class="cta" href="https://apps.apple.com/app/id6789684921" target="_blank" rel="noopener" data-i18n="dl">Descargar en el App Store</a>
+</section>
+
+<!-- ================= WHO ================= -->
+<section class="alt" id="quien">
+  <div class="wrap">
+    <h2 data-i18n="quienT">Para quién es Carbora</h2>
+    <p class="lead" data-i18n="quienL">Para cualquiera que necesite saber cuántos carbohidratos hay en su plato.</p>
+    <div class="who">
+      <div class="w"><h3 data-i18n="w1t">Personas con diabetes</h3><p data-i18n="w1b">Contar carbs tres veces al día agota. Carbora lo convierte en una foto y guarda tu glucosa junto a cada comida.</p></div>
+      <div class="w"><h3 data-i18n="w2t">Deportistas</h3><p data-i18n="w2b">Controla tus carbohidratos para entrenar y competir, sin hojas de cálculo ni básculas.</p></div>
+      <div class="w"><h3 data-i18n="w3t">Quien cuida lo que come</h3><p data-i18n="w3b">Si cuidas tus carbohidratos o tus calorías, una foto basta para saber dónde estás parado.</p></div>
+    </div>
   </div>
-  <p class="disclaimer" data-i18n="disc">Carbora ofrece estimaciones aproximadas y no es consejo médico. Confirma siempre con tu equipo de salud antes de tomar decisiones de tratamiento.</p>
+</section>
+
+<!-- ================= PRICING ================= -->
+<section id="precios">
+  <div class="wrap">
+    <h2 data-i18n="pT">Precios simples</h2>
+    <p class="lead" data-i18n="pL">Tus primeros análisis de foto son gratis. Tu historial de comidas y glucosa es gratis para siempre.</p>
+    <div class="pricing">
+      <div class="price"><h3 data-i18n="p1t">Mensual</h3><div class="amount">$9.99</div><div class="per" data-i18n="p1per">USD / mes</div><div class="trial" data-i18n="trial">7 días de prueba gratis</div></div>
+      <div class="price best"><span class="tag" data-i18n="best">Mejor precio</span><h3 data-i18n="p2t">Anual</h3><div class="amount">$59.99</div><div class="per" data-i18n="p2per">USD / año</div><div class="trial" data-i18n="trial">7 días de prueba gratis</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FINAL ================= -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="final">
+      <div>
+        <h2><span data-i18n="finalA">Todo empieza</span> <span class="grad" data-i18n="finalB">con una foto</span></h2>
+        <p data-i18n="finalP">Descarga Carbora y prueba 7 días gratis. Cancela cuando quieras.</p>
+      </div>
+      <div>
+        <a class="store" href="https://apps.apple.com/app/id6789684921" target="_blank" rel="noopener">
+          <svg viewBox="0 0 384 512" fill="#fff" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+          <span><span class="s1" data-i18n="dlSmall">Descárgala en el</span><span class="s2">App Store</span></span>
+        </a>
+        <p class="trialline">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="10" rx="2.4"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/></svg>
+          <span data-i18n="trialLine">Prueba gratis 7 días. Cancela cuando quieras.</span>
+        </p>
+      </div>
+    </div>
+    <p class="disclaimer" data-i18n="disc">Carbora ofrece estimaciones aproximadas y no es consejo médico. Confirma siempre con tu equipo de salud antes de tomar decisiones de tratamiento.</p>
+  </div>
 </section>
 
 <footer>
@@ -154,77 +434,109 @@
 
 <script>
 var I18N = {
-  es:{nFun:'Funciones',nComo:'Cómo funciona',nQuien:'Para quién',nPrecios:'Precios',nCta:'Descargar',dl:'Descargar en el App Store',
-    h1a:'Tu comida.',h1b:'Tus carbs.',h1c:'Tu glucosa.',h1d:'Tu control.',
-    sub:'Una foto de tu plato y la IA estima los carbohidratos — hecha para la comida real y la vida real con diabetes.',
-    heroCta:'Ver cómo funciona',soon:'📱 Ya disponible en el App Store · solo iPhone por ahora',
-    f1t:'Escaneo inteligente',f1b:'IA que reconoce tus alimentos al instante y estima carbs, proteína, grasa y calorías.',
-    f2t:'Comida real',f2b:'Tortilla de maíz vs. harina, tamales, arepas, feijoada — la comida que otras apps no entienden.',
-    f3t:'Glucosa por comida',f3b:'Registra antes y después de comer y mira cómo te afecta cada plato, día a día.',
-    f4t:'Privado por diseño',f4b:'Tus fotos se analizan y se descartan al instante. Tus datos jamás se venden ni comparten.',
+  es:{nComo:'Cómo funciona',nFun:'Funciones',nQuien:'Para quién',nPrecios:'Precios',nCta:'Prueba gratis 7 días',
+    badge:'La app de carbs hecha para la comida latina',
+    h1a:'Cuenta tus carbohidratos',h1b:'con una foto',
+    sub:'Carbora usa IA para estimar los carbohidratos de tu plato a partir de una foto, y los guarda junto a tus lecturas de glucosa.',
+    dlSmall:'Descárgala en el',heroCta:'Ver cómo funciona',trialLine:'Prueba gratis 7 días. Cancela cuando quieras.',
+    chipCarbs:'Carbohidratos',chipProt:'Proteína',chipFat:'Grasa',chipCal:'Calorías',chipGluc:'Glucosa',estim:'Estimación',youLogged:'Tu lectura',
+    f1t:'IA que estima tus carbs',f1b:'Reconoce los alimentos de tu plato y estima carbohidratos, proteína, grasa y calorías.',
+    f2t:'Comida real, comida latina',f2b:'Tortilla de maíz o de harina, tamales, arepas, feijoada — la comida que otras apps no entienden.',
+    f3t:'Tu glucosa, comida por comida',f3b:'Registra tu lectura antes y después. La app te muestra tus números, nunca opiniones sobre ellos.',
+    f4t:'Siempre editable',f4b:'Corrige el nombre, ajusta la porción o agrega lo que falte. Tú tienes la última palabra.',
+    f5t:'Tus fotos no se guardan',f5b:'La foto se analiza y se descarta al instante. Tus datos jamás se venden ni se comparten.',
     comoT:'Cómo funciona',comoL:'Tres pasos, menos de un minuto por comida.',
-    s1t:'Fotografía tu plato',s1b:'La IA identifica cada alimento y estima sus carbohidratos en segundos.',
-    s2t:'Ajusta si hace falta',s2b:'Las porciones siempre son editables. Tú tienes la última palabra.',
-    s3t:'Descubre tus patrones',s3b:'Registra tu glucosa por comida y ve tu historial por día, semana y mes.',
+    s1t:'Toma una foto',s1b:'Captura tu plato en segundos. La IA identifica los alimentos al instante.',
+    s2t:'Revisa y ajusta',s2b:'Carbohidratos, proteína, grasa y calorías estimados. Edítalos si hace falta.',
+    s3t:'Registra tu glucosa',s3b:'Guarda tus lecturas junto a la comida y revisa tu historial por semana y por mes.',
+    vsT:'¿Por qué elegir Carbora?',vsL:'Lo que cambia cuando la app se diseñó para contar carbohidratos, y no para bajar de peso.',
+    v1:'Una foto y listo: sin buscar en listas ni pesar la comida',v2:'Entiende la comida latina, no solo la comida de catálogo',
+    v3:'Guarda tus lecturas de glucosa junto a cada comida',v4:'Porciones y nombres editables por ti',v5:'Tus fotos no se almacenan',
+    gT:'Contar a mano o con apps genéricas',
+    g1:'Buscar cada ingrediente en una lista, tres veces al día',g2:'Bases de datos pensadas para otra cocina',
+    g3:'La glucosa vive en otra libreta',g4:'Porciones fijas que no se parecen a tu plato',g5:'Cuentan calorías, no carbohidratos',
     quienT:'Para quién es Carbora',quienL:'Para cualquiera que necesite saber cuántos carbohidratos hay en su plato.',
-    w1t:'Personas con diabetes',w1b:'Contar carbs 3 veces al día agota. Carbora lo convierte en una foto y conecta cada comida con tu glucosa.',
-    w2t:'Deportistas',w2b:'Controla tus carbohidratos para entrenar y competir sin hojas de cálculo ni básculas.',
-    w3t:'Cualquier persona',w3b:'Si cuidas tu consumo de carbohidratos, una foto basta para saber dónde estás parado.',
+    w1t:'Personas con diabetes',w1b:'Contar carbs tres veces al día agota. Carbora lo convierte en una foto y guarda tu glucosa junto a cada comida.',
+    w2t:'Deportistas',w2b:'Controla tus carbohidratos para entrenar y competir, sin hojas de cálculo ni básculas.',
+    w3t:'Quien cuida lo que come',w3b:'Si cuidas tus carbohidratos o tus calorías, una foto basta para saber dónde estás parado.',
     pT:'Precios simples',pL:'Tus primeros análisis de foto son gratis. Tu historial de comidas y glucosa es gratis para siempre.',
-    p1t:'Mensual',p1per:'USD / mes',p2t:'Anual',p2per:'USD / año',trial:'7 días de prueba gratis',trial2:'7 días de prueba gratis',best:'Mejor precio',
+    p1t:'Mensual',p1per:'USD / mes',p2t:'Anual',p2per:'USD / año',trial:'7 días de prueba gratis',best:'Mejor precio',
+    finalA:'Todo empieza',finalB:'con una foto',finalP:'Descarga Carbora y prueba 7 días gratis. Cancela cuando quieras.',
     disc:'Carbora ofrece estimaciones aproximadas y no es consejo médico. Confirma siempre con tu equipo de salud antes de tomar decisiones de tratamiento.',
     priv:'Política de privacidad',terms:'Términos de servicio'},
-  en:{nFun:'Features',nComo:'How it works',nQuien:'Who it’s for',nPrecios:'Pricing',nCta:'Download',dl:'Download on the App Store',
-    h1a:'Your food.',h1b:'Your carbs.',h1c:'Your glucose.',h1d:'Your control.',
-    sub:'One photo of your plate and AI estimates the carbs — built for real food and real life with diabetes.',
-    heroCta:'See how it works',soon:'📱 Now on the App Store · iPhone only for now',
-    f1t:'Smart scanning',f1b:'AI that recognizes your food instantly and estimates carbs, protein, fat and calories.',
-    f2t:'Real food',f2b:'Corn vs. flour tortilla, tamales, arepas, rice and beans — food other apps get wrong.',
-    f3t:'Glucose per meal',f3b:'Log before and after eating and see how each plate affects you, day by day.',
-    f4t:'Private by design',f4b:'Photos are analyzed and immediately discarded. Your data is never sold or shared.',
+
+  en:{nComo:'How it works',nFun:'Features',nQuien:'Who it’s for',nPrecios:'Pricing',nCta:'Start 7-day free trial',
+    badge:'The carb app built for Latin food',
+    h1a:'Count your carbs',h1b:'with one photo',
+    sub:'Carbora uses AI to estimate the carbs on your plate from a photo, and keeps them next to your glucose readings.',
+    dlSmall:'Download on the',heroCta:'See how it works',trialLine:'7-day free trial. Cancel anytime.',
+    chipCarbs:'Carbs',chipProt:'Protein',chipFat:'Fat',chipCal:'Calories',chipGluc:'Glucose',estim:'Estimate',youLogged:'Your reading',
+    f1t:'AI that estimates your carbs',f1b:'Recognizes the food on your plate and estimates carbs, protein, fat and calories.',
+    f2t:'Real food, Latin food',f2b:'Corn or flour tortilla, tamales, arepas, feijoada — food other apps get wrong.',
+    f3t:'Your glucose, meal by meal',f3b:'Log your reading before and after. The app shows your numbers, never opinions about them.',
+    f4t:'Always editable',f4b:'Fix the name, adjust the portion or add what’s missing. You have the final say.',
+    f5t:'Your photos are not stored',f5b:'The photo is analyzed and discarded instantly. Your data is never sold or shared.',
     comoT:'How it works',comoL:'Three steps, under a minute per meal.',
-    s1t:'Snap your plate',s1b:'AI identifies each food and estimates its carbs in seconds.',
-    s2t:'Adjust if needed',s2b:'Portions are always editable. You have the final say.',
-    s3t:'Find your patterns',s3b:'Log glucose per meal and see your history by day, week and month.',
+    s1t:'Snap a photo',s1b:'Capture your plate in seconds. AI identifies the food instantly.',
+    s2t:'Review and adjust',s2b:'Estimated carbs, protein, fat and calories. Edit them if you need to.',
+    s3t:'Log your glucose',s3b:'Save your readings next to the meal and review your history by week and month.',
+    vsT:'Why choose Carbora?',vsL:'What changes when the app was designed to count carbs, not to lose weight.',
+    v1:'One photo, done: no lists to search, no food scale',v2:'Understands Latin food, not just catalog food',
+    v3:'Keeps your glucose readings next to each meal',v4:'Portions and names you can edit',v5:'Your photos are not stored',
+    gT:'Counting by hand or with generic apps',
+    g1:'Searching every ingredient in a list, three times a day',g2:'Databases built for another kitchen',
+    g3:'Glucose lives in a separate notebook',g4:'Fixed portions that look nothing like your plate',g5:'They count calories, not carbs',
     quienT:'Who Carbora is for',quienL:'Anyone who needs to know how many carbs are on their plate.',
-    w1t:'People with diabetes',w1b:'Counting carbs 3 times a day is exhausting. Carbora makes it one photo and connects each meal to your glucose.',
-    w2t:'Athletes',w2b:'Track your carbs for training and competition without spreadsheets or food scales.',
-    w3t:'Anyone',w3b:'If you watch your carb intake, one photo tells you where you stand.',
+    w1t:'People with diabetes',w1b:'Counting carbs three times a day is exhausting. Carbora makes it one photo and keeps your glucose next to each meal.',
+    w2t:'Athletes',w2b:'Track your carbs for training and competition, without spreadsheets or food scales.',
+    w3t:'Anyone watching what they eat',w3b:'If you watch your carbs or calories, one photo tells you where you stand.',
     pT:'Simple pricing',pL:'Your first photo analyses are free. Your meal and glucose history stays free forever.',
-    p1t:'Monthly',p1per:'USD / month',p2t:'Yearly',p2per:'USD / year',trial:'7-day free trial',trial2:'7-day free trial',best:'Best value',
+    p1t:'Monthly',p1per:'USD / month',p2t:'Yearly',p2per:'USD / year',trial:'7-day free trial',best:'Best value',
+    finalA:'It all starts',finalB:'with one photo',finalP:'Download Carbora and try it free for 7 days. Cancel anytime.',
     disc:'Carbora provides approximate estimates and is not medical advice. Always confirm with your care team before making treatment decisions.',
     priv:'Privacy Policy',terms:'Terms of Service'},
-  pt:{nFun:'Funções',nComo:'Como funciona',nQuien:'Para quem',nPrecios:'Preços',nCta:'Baixar',dl:'Baixar na App Store',
-    h1a:'Sua comida.',h1b:'Seus carbos.',h1c:'Sua glicose.',h1d:'Seu controle.',
-    sub:'Uma foto do seu prato e a IA estima os carboidratos — feito para a comida real e a vida real com diabetes.',
-    heroCta:'Veja como funciona',soon:'📱 Já disponível na App Store · só iPhone por enquanto',
-    f1t:'Escaneamento inteligente',f1b:'IA que reconhece seus alimentos na hora e estima carboidratos, proteína, gordura e calorias.',
-    f2t:'Comida de verdade',f2b:'Arroz com feijão, pão de queijo, farofa, tapioca — a comida que outros apps não entendem.',
-    f3t:'Glicose por refeição',f3b:'Registre antes e depois de comer e veja como cada prato afeta você, dia a dia.',
-    f4t:'Privado por design',f4b:'As fotos são analisadas e descartadas na hora. Seus dados jamais são vendidos ou compartilhados.',
+
+  pt:{nComo:'Como funciona',nFun:'Funções',nQuien:'Para quem',nPrecios:'Preços',nCta:'Teste grátis de 7 dias',
+    badge:'O app de carboidratos feito para a comida latina',
+    h1a:'Conte seus carboidratos',h1b:'com uma foto',
+    sub:'O Carbora usa IA para estimar os carboidratos do seu prato a partir de uma foto e os guarda junto das suas medições de glicose.',
+    dlSmall:'Baixe na',heroCta:'Veja como funciona',trialLine:'7 dias grátis. Cancele quando quiser.',
+    chipCarbs:'Carboidratos',chipProt:'Proteína',chipFat:'Gordura',chipCal:'Calorias',chipGluc:'Glicose',estim:'Estimativa',youLogged:'Sua medição',
+    f1t:'IA que estima seus carboidratos',f1b:'Reconhece os alimentos do prato e estima carboidratos, proteína, gordura e calorias.',
+    f2t:'Comida de verdade, comida latina',f2b:'Arroz com feijão, pão de queijo, farofa, tapioca — a comida que outros apps não entendem.',
+    f3t:'Sua glicose, refeição por refeição',f3b:'Registre sua medição antes e depois. O app mostra seus números, nunca opiniões sobre eles.',
+    f4t:'Sempre editável',f4b:'Corrija o nome, ajuste a porção ou acrescente o que faltou. Você tem a palavra final.',
+    f5t:'Suas fotos não são guardadas',f5b:'A foto é analisada e descartada na hora. Seus dados jamais são vendidos ou compartilhados.',
     comoT:'Como funciona',comoL:'Três passos, menos de um minuto por refeição.',
-    s1t:'Fotografe seu prato',s1b:'A IA identifica cada alimento e estima os carboidratos em segundos.',
-    s2t:'Ajuste se precisar',s2b:'As porções são sempre editáveis. Você tem a palavra final.',
-    s3t:'Descubra seus padrões',s3b:'Registre sua glicose por refeição e veja seu histórico por dia, semana e mês.',
+    s1t:'Tire uma foto',s1b:'Capture seu prato em segundos. A IA identifica os alimentos na hora.',
+    s2t:'Revise e ajuste',s2b:'Carboidratos, proteína, gordura e calorias estimados. Edite se precisar.',
+    s3t:'Registre sua glicose',s3b:'Guarde suas medições junto da refeição e veja seu histórico por semana e por mês.',
+    vsT:'Por que escolher o Carbora?',vsL:'O que muda quando o app foi feito para contar carboidratos, e não para emagrecer.',
+    v1:'Uma foto e pronto: sem procurar em listas nem pesar a comida',v2:'Entende a comida latina, não só a comida de catálogo',
+    v3:'Guarda suas medições de glicose junto de cada refeição',v4:'Porções e nomes que você pode editar',v5:'Suas fotos não são armazenadas',
+    gT:'Contar na mão ou com apps genéricos',
+    g1:'Procurar cada ingrediente numa lista, três vezes por dia',g2:'Bancos de dados feitos para outra cozinha',
+    g3:'A glicose fica em outro caderno',g4:'Porções fixas que não se parecem com seu prato',g5:'Contam calorias, não carboidratos',
     quienT:'Para quem é o Carbora',quienL:'Para qualquer pessoa que precise saber quantos carboidratos há no prato.',
-    w1t:'Pessoas com diabetes',w1b:'Contar carboidratos 3 vezes por dia cansa. O Carbora transforma isso em uma foto e conecta cada refeição à sua glicose.',
-    w2t:'Atletas',w2b:'Controle seus carboidratos para treinar e competir sem planilhas nem balanças.',
-    w3t:'Qualquer pessoa',w3b:'Se você cuida do consumo de carboidratos, uma foto basta para saber onde está.',
+    w1t:'Pessoas com diabetes',w1b:'Contar carboidratos três vezes por dia cansa. O Carbora transforma isso em uma foto e guarda sua glicose junto de cada refeição.',
+    w2t:'Atletas',w2b:'Controle seus carboidratos para treinar e competir, sem planilhas nem balanças.',
+    w3t:'Quem cuida do que come',w3b:'Se você cuida dos carboidratos ou das calorias, uma foto basta para saber onde está.',
     pT:'Preços simples',pL:'Suas primeiras análises de foto são grátis. Seu histórico de refeições e glicose é grátis para sempre.',
-    p1t:'Mensal',p1per:'US$ / mês',p2t:'Anual',p2per:'US$ / ano',trial:'7 dias de teste grátis',trial2:'7 dias de teste grátis',best:'Melhor preço',
+    p1t:'Mensal',p1per:'US$ / mês',p2t:'Anual',p2per:'US$ / ano',trial:'7 dias de teste grátis',best:'Melhor preço',
+    finalA:'Tudo começa',finalB:'com uma foto',finalP:'Baixe o Carbora e teste 7 dias grátis. Cancele quando quiser.',
     disc:'O Carbora fornece estimativas aproximadas e não é aconselhamento médico. Sempre confirme com sua equipe de saúde antes de tomar decisões de tratamento.',
     priv:'Política de Privacidade',terms:'Termos de Serviço'}
 };
 function setLang(l){
   document.querySelectorAll('[data-i18n]').forEach(function(el){ var v=I18N[l][el.dataset.i18n]; if(v) el.textContent=v; });
   document.querySelectorAll('.langs button').forEach(function(b){ b.classList.toggle('active',b.dataset.set===l); });
-  document.documentElement.lang = l;
+  document.documentElement.lang=l;
   try{localStorage.setItem('carbora-lang',l);}catch(e){}
 }
 document.querySelectorAll('.langs button').forEach(function(b){ b.addEventListener('click',function(){ setLang(b.dataset.set); }); });
 var saved=null; try{saved=localStorage.getItem('carbora-lang');}catch(e){}
-var nav=(navigator.language||'es').slice(0,2);
-setLang(saved||({en:1,es:1,pt:1}[nav]?nav:'es'));
+var nv=(navigator.language||'es').slice(0,2);
+setLang(saved||({en:1,es:1,pt:1}[nv]?nv:'es'));
 </script>
 </body>
 </html>
