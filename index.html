@@ -96,6 +96,19 @@
   .feat h3{font-size:16.5px;line-height:1.25;margin-bottom:7px}
   .feat p{font-size:13.8px;color:var(--mut);line-height:1.5}
 
+  /* recuadro del reporte — se apoya en los estilos que ya existen, no toca nada */
+  .repbox{margin-top:20px;background:#fff;border:1px solid var(--line);border-radius:20px;
+    padding:20px 24px;display:flex;align-items:center;gap:18px;box-shadow:0 10px 26px rgba(11,30,58,.06)}
+  .repbox .ic{width:52px;height:52px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(140deg,var(--teal),var(--turq))}
+  .repbox .ic svg{width:24px;height:24px;color:#fff}
+  .repbox .tx{flex:1;min-width:0}
+  .repbox h3{font-size:16.5px;margin-bottom:4px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .repbox .new{background:linear-gradient(90deg,var(--lime),#7BD84F);color:#0B2C10;font-size:10px;font-weight:800;
+    letter-spacing:.6px;text-transform:uppercase;border-radius:20px;padding:3px 9px}
+  .repbox p{font-size:13.8px;color:var(--mut);line-height:1.5}
+  @media (max-width:600px){.repbox{flex-direction:column;text-align:center}.repbox h3{justify-content:center}}
+
   .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
   .step{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;display:flex;gap:16px;box-shadow:0 10px 26px rgba(11,30,58,.06)}
   .step .n{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--lime));color:#fff;
@@ -343,6 +356,20 @@
         </div>
       </div>
     </div>
+
+    <div class="repbox">
+      <div class="ic">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/>
+          <polyline points="9 15 12 18 15 15"/>
+        </svg>
+      </div>
+      <div class="tx">
+        <h3><span data-i18n="repT">Descarga tu reporte en PDF</span><span class="new" data-i18n="repNew">Nuevo</span></h3>
+        <p data-i18n="repB">Tus comidas y tus lecturas de los últimos 7, 30 o 90 días en un documento ordenado, listo para llevarle a tu médico o a tu nutriólogo. Sin diagnósticos ni interpretaciones: solo tus números.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -449,6 +476,7 @@ var I18N = {
     s1t:'Toma una foto',s1b:'Captura tu plato en segundos. La IA identifica los alimentos al instante.',
     s2t:'Revisa y ajusta',s2b:'Carbohidratos, proteína, grasa y calorías estimados. Edítalos si hace falta.',
     s3t:'Registra tu glucosa',s3b:'Guarda tus lecturas junto a la comida y revisa tu historial por semana y por mes.',
+    repT:'Descarga tu reporte en PDF',repNew:'Nuevo',repB:'Tus comidas y tus lecturas de los últimos 7, 30 o 90 días en un documento ordenado, listo para llevarle a tu médico o a tu nutriólogo. Sin diagnósticos ni interpretaciones: solo tus números.',
     vsT:'¿Por qué elegir Carbora?',vsL:'Lo que cambia cuando la app se diseñó para contar carbohidratos, y no para bajar de peso.',
     v1:'Una foto y listo: sin buscar en listas ni pesar la comida',v2:'Entiende la comida latina, no solo la comida de catálogo',
     v3:'Guarda tus lecturas de glucosa junto a cada comida',v4:'Porciones y nombres editables por ti',v5:'Tus fotos no se almacenan',
@@ -480,6 +508,7 @@ var I18N = {
     s1t:'Snap a photo',s1b:'Capture your plate in seconds. AI identifies the food instantly.',
     s2t:'Review and adjust',s2b:'Estimated carbs, protein, fat and calories. Edit them if you need to.',
     s3t:'Log your glucose',s3b:'Save your readings next to the meal and review your history by week and month.',
+    repT:'Download your report as a PDF',repNew:'New',repB:'Your meals and your readings from the last 7, 30 or 90 days in a clean document, ready to hand to your doctor or your nutritionist. No diagnoses, no interpretation — just your numbers.',
     vsT:'Why choose Carbora?',vsL:'What changes when the app was designed to count carbs, not to lose weight.',
     v1:'One photo, done: no lists to search, no food scale',v2:'Understands Latin food, not just catalog food',
     v3:'Keeps your glucose readings next to each meal',v4:'Portions and names you can edit',v5:'Your photos are not stored',
@@ -511,6 +540,7 @@ var I18N = {
     s1t:'Tire uma foto',s1b:'Capture seu prato em segundos. A IA identifica os alimentos na hora.',
     s2t:'Revise e ajuste',s2b:'Carboidratos, proteína, gordura e calorias estimados. Edite se precisar.',
     s3t:'Registre sua glicose',s3b:'Guarde suas medições junto da refeição e veja seu histórico por semana e por mês.',
+    repT:'Baixe seu relatório em PDF',repNew:'Novo',repB:'Suas refeições e suas leituras dos últimos 7, 30 ou 90 dias em um documento organizado, pronto para levar ao seu médico ou ao seu nutricionista. Sem diagnósticos nem interpretações: só os seus números.',
     vsT:'Por que escolher o Carbora?',vsL:'O que muda quando o app foi feito para contar carboidratos, e não para emagrecer.',
     v1:'Uma foto e pronto: sem procurar em listas nem pesar a comida',v2:'Entende a comida latina, não só a comida de catálogo',
     v3:'Guarda suas medições de glicose junto de cada refeição',v4:'Porções e nomes que você pode editar',v5:'Suas fotos não são armazenadas',
