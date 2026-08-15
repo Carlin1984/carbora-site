@@ -149,7 +149,8 @@
   .w p{color:var(--mut);font-size:14.2px}
 
   .pricing{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;max-width:640px;margin:0 auto}
-  .price{background:#fff;border:1px solid var(--line);border-radius:20px;padding:28px;text-align:center;position:relative;box-shadow:0 10px 26px rgba(11,30,58,.06)}
+  .price{background:#fff;border:1px solid var(--line);border-radius:20px;padding:28px;text-align:center;position:relative;box-shadow:0 10px 26px rgba(11,30,58,.06);display:block;text-decoration:none;color:inherit;transition:transform .15s ease,box-shadow .15s ease}
+  .price:hover{transform:translateY(-4px);box-shadow:0 18px 36px rgba(11,30,58,.14)}
   .price.best{border:2px solid var(--lime)}
   .price .tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--lime);color:#0B2C10;
     font-size:12px;font-weight:800;border-radius:12px;padding:3px 14px;white-space:nowrap}
@@ -423,8 +424,8 @@
     <h2 data-i18n="pT">Precios simples</h2>
     <p class="lead" data-i18n="pL">Tus primeros análisis de foto son gratis. Tu historial de comidas y glucosa es gratis para siempre.</p>
     <div class="pricing">
-      <div class="price"><h3 data-i18n="p1t">Mensual</h3><div class="amount">$9.99</div><div class="per" data-i18n="p1per">USD / mes</div><div class="trial" data-i18n="trial">7 días de prueba gratis</div></div>
-      <div class="price best"><span class="tag" data-i18n="best">Mejor precio</span><h3 data-i18n="p2t">Anual</h3><div class="amount">$59.99</div><div class="per" data-i18n="p2per">USD / año</div><div class="trial" data-i18n="trial">7 días de prueba gratis</div></div>
+      <a class="price" href="https://apps.apple.com/app/id6789684921" target="_blank" rel="noopener"><h3 data-i18n="p1t">Mensual</h3><div class="amount">$9.99</div><div class="per" data-i18n="p1per">USD / mes</div><div class="trial" data-i18n="trial">7 días de prueba gratis</div></a>
+      <a class="price best" href="https://apps.apple.com/app/id6789684921" target="_blank" rel="noopener"><span class="tag" data-i18n="best">Mejor precio</span><h3 data-i18n="p2t">Anual</h3><div class="amount">$59.99</div><div class="per" data-i18n="p2per">USD / año</div><div class="trial" data-i18n="trial">7 días de prueba gratis</div></a>
     </div>
   </div>
 </section>
