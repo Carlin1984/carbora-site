@@ -8,24 +8,33 @@
 <meta name="robots" content="noindex">
 <link rel="icon" href="/icon.png">
 <style>
-body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(160deg,#02113F,#063A8C 62%,#0AA79E);color:#fff;text-align:center;padding:24px}
-img{width:96px;height:96px;border-radius:22px}
-h1{font-size:26px;margin:18px 0 6px}
-p{opacity:.85;margin:0 0 24px}
-a{display:inline-block;background:#fff;color:#02113F;font-weight:700;text-decoration:none;padding:14px 26px;border-radius:14px}
-small{display:block;margin-top:18px;opacity:.6}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(160deg,#02113F,#063A8C 62%,#0AA79E);color:#fff;display:flex;align-items:center;justify-content:center;padding:28px 22px}
+main{width:100%;max-width:440px;text-align:center}
+img{width:104px;height:104px;border-radius:24px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+h1{font-size:30px;line-height:1.2;margin:20px 0 10px}
+p.sub{font-size:20px;line-height:1.4;margin:0 0 24px;opacity:.92}
+ul{list-style:none;padding:0;margin:0 0 28px;text-align:left;font-size:19px;line-height:1.45}
+li{background:rgba(255,255,255,.1);border-radius:14px;padding:12px 16px;margin-bottom:10px}
+a.btn{display:block;background:#AFE52E;color:#02113F;font-size:24px;font-weight:800;text-decoration:none;padding:22px 18px;border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+a.btn:active{transform:scale(.98)}
+p.help{font-size:17px;line-height:1.45;margin:18px 0 0;opacity:.85}
+small{display:block;margin-top:22px;font-size:14px;opacity:.6}
 </style>
 </head>
 <body>
 <main>
 <img src="/icon.png" alt="Carbora">
-<h1>Abriendo la App Store…</h1>
-<p>Carbora para iPhone · Gratis para empezar</p>
-<a id="ir" href="https://apps.apple.com/app/id6789684921">Descargar en la App Store</a>
+<h1>Carbora</h1>
+<p class="sub">Toma una foto de tu comida y Carbora estima los carbohidratos en segundos.</p>
+<ul>
+<li>📸 Una foto y listo, sin tablas ni báscula</li>
+<li>🌮 Entiende la comida latina de todos los días</li>
+<li>📱 Gratis para empezar, en iPhone</li>
+</ul>
+<a class="btn" href="https://apps.apple.com/app/id6789684921">📲 Descargar Carbora gratis</a>
+<p class="help">Toca el botón verde para abrir la App Store.<br>Si no se abre, busca <b>“Carbora”</b> en la App Store.</p>
 <small>Las cifras de la app son estimaciones. No es consejo médico.</small>
 </main>
-<script>
-setTimeout(function(){ location.replace(document.getElementById('ir').href); }, 400);
-</script>
 </body>
 </html>
